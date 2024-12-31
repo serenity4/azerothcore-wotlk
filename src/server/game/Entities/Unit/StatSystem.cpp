@@ -375,7 +375,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
     }
     else
     {
-        if (IsClass(CLASS_PALADIN, CLASS_CONTEXT_STATS) || IsClass(CLASS_DEATH_KNIGHT, CLASS_CONTEXT_STATS) || IsClass(CLASS_WARRIOR, CLASS_CONTEXT_STATS))
+        if (IsClass(CLASS_PALADIN, CLASS_CONTEXT_STATS) || IsClass(CLASS_DEATH_KNIGHT, CLASS_CONTEXT_STATS) || IsClass(CLASS_WARRIOR, CLASS_CONTEXT_STATS) || IsClass(CLASS_SPELLBLADE, CLASS_CONTEXT_STATS))
         {
             val2 = level * 3.0f + GetStat(STAT_STRENGTH) * 2.0f - 20.0f;
         }
@@ -514,7 +514,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
         UpdateDamagePhysical(BASE_ATTACK);
         if (CanDualWield() && haveOffhandWeapon())           //allow update offhand damage only if player knows DualWield Spec and has equipped offhand weapon
             UpdateDamagePhysical(OFF_ATTACK);
-        if (IsClass(CLASS_SHAMAN, CLASS_CONTEXT_STATS) || IsClass(CLASS_PALADIN, CLASS_CONTEXT_STATS))                      // mental quickness
+        if (IsClass(CLASS_SHAMAN, CLASS_CONTEXT_STATS) || IsClass(CLASS_PALADIN, CLASS_CONTEXT_STATS) || IsClass(CLASS_SPELLBLADE, CLASS_CONTEXT_STATS))                      // mental quickness
             UpdateSpellDamageAndHealingBonus();
     }
 }
@@ -702,7 +702,8 @@ const float m_diminishing_k[MAX_CLASSES] =
     0.9830f,  // Mage
     0.9830f,  // Warlock
     0.0f,     // ??
-    0.9720f   // Druid
+    0.9720f,  // Druid
+    0.9560f   // Spellblade
 };
 
 float Player::GetMissPercentageFromDefence() const
@@ -719,7 +720,8 @@ float Player::GetMissPercentageFromDefence() const
         16.00f,     // Mage    //?
         16.00f,     // Warlock //?
         0.0f,       // ??
-        16.00f      // Druid   //?
+        16.00f,     // Druid   //?
+        16.00f      // Spellblade   //?
     };
 
     float diminishing = 0.0f, nondiminishing = 0.0f;
@@ -746,7 +748,8 @@ void Player::UpdateParryPercentage()
         0.0f,           // Mage
         0.0f,           // Warlock
         0.0f,           // ??
-        0.0f            // Druid
+        0.0f,           // Druid
+        47.003525f      // Spellblade
     };
 
     // No parry
@@ -792,7 +795,8 @@ void Player::UpdateDodgePercentage()
         150.375940f,    // Mage
         150.375940f,    // Warlock
         0.0f,           // ??
-        116.890707f     // Druid
+        116.890707f,    // Druid
+        88.129021f,     // Spellblade
     };
 
     float diminishing = 0.0f, nondiminishing = 0.0f;

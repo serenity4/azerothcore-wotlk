@@ -1745,6 +1745,7 @@ class spell_item_flask_of_the_north : public SpellScript
                 break;
             case CLASS_DRUID:
             case CLASS_PALADIN:
+            case CLASS_SPELLBLADE:
                 possibleSpells.push_back(SPELL_FLASK_OF_THE_NORTH_SP);
                 possibleSpells.push_back(SPELL_FLASK_OF_THE_NORTH_STR);
                 break;

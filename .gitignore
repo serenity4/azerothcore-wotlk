@@ -5,6 +5,7 @@
 /conf/*
 !/conf/dist
 /modules/*
+/unused_modules/*
 !/modules/*.md
 !/modules/*.sh
 !/modules/CMakeLists.txt
