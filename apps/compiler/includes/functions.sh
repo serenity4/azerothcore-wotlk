@@ -134,7 +134,7 @@ function comp_compile() {
       mkdir -p "$confDir"
 
       echo "Cmake install..."
-      sudo cmake --install . --config $CTYPE
+      cmake --install . --config $CTYPE
 
       popd >> /dev/null || exit 1
 
