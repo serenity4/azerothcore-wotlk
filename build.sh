@@ -12,7 +12,7 @@ AC_CCACHE=true CWARNINGS=OFF inst_compile
 
 exit
 
-./acore.sh client-data
+# ./acore.sh client-data
 
 # https://github.com/azerothcore/mod-account-mounts
 

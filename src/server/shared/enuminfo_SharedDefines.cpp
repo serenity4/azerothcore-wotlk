@@ -101,6 +101,7 @@ AC_API_EXPORT EnumText EnumUtils<Classes>::ToString(Classes value)
         case CLASS_PRIEST: return { "CLASS_PRIEST", "Priest", "" };
         case CLASS_DEATH_KNIGHT: return { "CLASS_DEATH_KNIGHT", "Death Knight", "" };
         case CLASS_SHAMAN: return { "CLASS_SHAMAN", "Shaman", "" };
+        case CLASS_SPELLBLADE: return { "CLASS_SPELLBLADE", "Spellblade", "" };
         case CLASS_MAGE: return { "CLASS_MAGE", "Mage", "" };
         case CLASS_WARLOCK: return { "CLASS_WARLOCK", "Warlock", "" };
         case CLASS_DRUID: return { "CLASS_DRUID", "Druid", "" };
@@ -126,6 +127,7 @@ AC_API_EXPORT Classes EnumUtils<Classes>::FromIndex(std::size_t index)
         case 7: return CLASS_MAGE;
         case 8: return CLASS_WARLOCK;
         case 9: return CLASS_DRUID;
+        case 10: return CLASS_SPELLBLADE;
         default: throw std::out_of_range("index");
     }
 }
@@ -145,6 +147,7 @@ AC_API_EXPORT std::size_t EnumUtils<Classes>::ToIndex(Classes value)
         case CLASS_MAGE: return 7;
         case CLASS_WARLOCK: return 8;
         case CLASS_DRUID: return 9;
+        case CLASS_SPELLBLADE: return 10;
         default: throw std::out_of_range("value");
     }
 }

@@ -2285,6 +2285,9 @@ public:
             case CLASS_SHAMAN:
                 classStr = "Shaman";
                 break;
+            case CLASS_SPELLBLADE:
+                classStr = "Spellblade";
+                break;
             case CLASS_MAGE:
                 classStr = "Mage";
                 break;

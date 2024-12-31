@@ -6631,6 +6631,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             switch (getClass())
                             {
                                 case CLASS_PALADIN:                 // 39511, 40997, 40998, 40999, 41002, 41005, 41009, 41011, 41409
+                                case CLASS_SPELLBLADE:              // 39511, 40997, 40998, 40999, 41002, 41005, 41009, 41011, 41409
                                 case CLASS_DRUID:                   // 39511, 40997, 40998, 40999, 41002, 41005, 41009, 41011, 41409
                                     triggered_spell_id = RAND(39511, 40997, 40998, 40999, 41002, 41005, 41009, 41011, 41409);
                                     cooldown_spell_id = 39511;
@@ -6825,6 +6826,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             {
                                 case CLASS_WARRIOR:
                                 case CLASS_PALADIN:
+                                case CLASS_SPELLBLADE:
                                 case CLASS_DEATH_KNIGHT:
                                     RandomSpells.push_back(71484);
                                     RandomSpells.push_back(71491);
@@ -6868,6 +6870,7 @@ bool Unit::HandleDummyAuraProc(Unit* victim, uint32 damage, AuraEffect* triggere
                             {
                                 case CLASS_WARRIOR:
                                 case CLASS_PALADIN:
+                                case CLASS_SPELLBLADE:
                                 case CLASS_DEATH_KNIGHT:
                                     RandomSpells.push_back(71561);
                                     RandomSpells.push_back(71559);

@@ -1,5 +1,8 @@
 {
     "files.associations": {
+        "*.toml": "ini",
+        "*.spvasm": "julia",
+        "compile": "fish",
         "*.dist": "properties",
         "*.crash": "properties",
         "*.wtf": "properties",
@@ -114,7 +117,12 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "*.ipp": "cpp",
-        "resumable": "cpp"
+        "resumable": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "expected": "cpp",
+        "stdfloat": "cpp",
+        "text_encoding": "cpp"
     },
     "deno.enable": true,
     "deno.path": "deps/deno/bin/deno",

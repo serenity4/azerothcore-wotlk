@@ -2265,7 +2265,7 @@ InventoryResult Player::CanUseItem(Item* pItem, bool not_loading) const
                     // In fact it's a visual bug, everything works properly... I need sniffs of operations with
                     // binded to account items from off server.
 
-                    if (IsClass(CLASS_PALADIN, CLASS_CONTEXT_EQUIP_ARMOR_CLASS) || IsClass(CLASS_WARRIOR, CLASS_CONTEXT_EQUIP_ARMOR_CLASS))
+                    if (IsClass(CLASS_PALADIN, CLASS_CONTEXT_EQUIP_ARMOR_CLASS) || IsClass(CLASS_WARRIOR, CLASS_CONTEXT_EQUIP_ARMOR_CLASS) || IsClass(CLASS_SPELLBLADE, CLASS_CONTEXT_EQUIP_ARMOR_CLASS))
                     {
                         allowEquip = (itemSkill == SKILL_PLATE_MAIL);
                     }
@@ -2394,6 +2394,7 @@ InventoryResult Player::CanRollForItemInLFG(ItemTemplate const* proto, WorldObje
         // Check for shields
         if (proto->SubClass == ITEM_SUBCLASS_ARMOR_SHIELD && !(
             IsClass(CLASS_PALADIN, CLASS_CONTEXT_EQUIP_SHIELDS)
+            || IsClass(CLASS_SPELLBLADE, CLASS_CONTEXT_EQUIP_SHIELDS)
             || IsClass(CLASS_WARRIOR, CLASS_CONTEXT_EQUIP_SHIELDS)
             || IsClass(CLASS_SHAMAN, CLASS_CONTEXT_EQUIP_SHIELDS)))
         {
@@ -2429,7 +2430,7 @@ InventoryResult Player::CanRollForItemInLFG(ItemTemplate const* proto, WorldObje
         proto->InventoryType != INVTYPE_CLOAK)
     {
         uint32 subclassToCompare = ITEM_SUBCLASS_ARMOR_CLOTH;
-        if (IsClass(CLASS_DEATH_KNIGHT, CLASS_CONTEXT_EQUIP_ARMOR_CLASS) || IsClass(CLASS_PALADIN, CLASS_CONTEXT_EQUIP_ARMOR_CLASS))
+        if (IsClass(CLASS_DEATH_KNIGHT, CLASS_CONTEXT_EQUIP_ARMOR_CLASS) || IsClass(CLASS_PALADIN, CLASS_CONTEXT_EQUIP_ARMOR_CLASS) || IsClass(CLASS_SPELLBLADE, CLASS_CONTEXT_EQUIP_ARMOR_CLASS))
         {
             subclassToCompare = ITEM_SUBCLASS_ARMOR_PLATE;
         }
