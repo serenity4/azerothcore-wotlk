@@ -118,6 +118,36 @@ Quest::Quest(Field* questRecord)
             ++_reqItemsCount;
     }
 
+    // Interpolate quest quantities, %q1...%q4 and %Q1...%Q6.
+    size_t start = 0;
+    std::string pattern;
+    std::string by;
+    int value;
+    for (int i = 0; i < QUEST_OBJECTIVES_COUNT; i++) {
+        value = RequiredNpcOrGoCount[i];
+        if (!value)
+            break;
+        pattern = "%q" + std::to_string(i + 1);
+        start = Objectives.find(pattern);
+        while (start != std::string::npos) {
+            by = std::to_string(value);
+            Objectives.replace(start, 3, by);
+            start = Objectives.find(pattern, start);
+        }
+    }
+    for (int i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++) {
+        value = RequiredItemCount[i];
+        if (!value)
+            break;
+        pattern = "%Q" + std::to_string(i + 1);
+        start = Objectives.find(pattern);
+        while (start != std::string::npos) {
+            by = std::to_string(value);
+            Objectives.replace(start, 3, by);
+            start = Objectives.find(pattern, start);
+        }
+    }
+
     // int8 Unknown0 = questRecord[100].Get<uint8>();
     // int32 VerifiedBuild = questRecord[105].Get<int32>();
 
