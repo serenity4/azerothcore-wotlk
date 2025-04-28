@@ -48,23 +48,26 @@ do
     #    exit 0
     #fi
 
-    echo "$bin_file terminated, restarting..."
+    # echo "$bin_file terminated, restarting..."
 
     ENDING_TIME=$(date +%s)
     DIFFERENCE=$(( $ENDING_TIME - $STARTING_TIME ))
 
     ((_restart_count++))
-    echo "$bin_file Terminated after $DIFFERENCE seconds, termination count: : $_restart_count"
+    echo "$bin_file terminated after $DIFFERENCE seconds"
+    exit 1
 
-    if [ $DIFFERENCE -lt 10 ]; then
-        # increment instant crash if runtime is lower than 10 seconds
-        ((_instant_crash_count++))
-    else
-        _instant_crash_count=0 # reset count
-    fi
+    # echo "$bin_file Terminated after $DIFFERENCE seconds, termination count: : $_restart_count"
 
-    if [ $_instant_crash_count -gt 5 ]; then
-        echo "$bin_file Restarter exited. Infinite crash loop prevented. Please check your system"
-        exit 1
-    fi
+    # if [ $DIFFERENCE -lt 10 ]; then
+    #     # increment instant crash if runtime is lower than 10 seconds
+    #     ((_instant_crash_count++))
+    # else
+    #     _instant_crash_count=0 # reset count
+    # fi
+
+    # if [ $_instant_crash_count -gt 5 ]; then
+    #     echo "$bin_file Restarter exited. Infinite crash loop prevented. Please check your system"
+    #     exit 1
+    # fi
 done
