@@ -21,6 +21,14 @@
 #include "Player.h"
 #include "World.h"
 
+void replace_in_str(std::string &str, const std::string pattern, std::function<std::string(void)> f) {
+    size_t start = str.find(pattern);
+    while (start != std::string::npos) {
+        str.replace(start, pattern.length(), f());
+        start = str.find(pattern, start);
+    }
+}
+
 Quest::Quest(Field* questRecord)
 {
     EmoteOnIncomplete = 0;
@@ -118,36 +126,6 @@ Quest::Quest(Field* questRecord)
             ++_reqItemsCount;
     }
 
-    // Interpolate quest quantities, %q1...%q4 and %Q1...%Q6.
-    size_t start = 0;
-    std::string pattern;
-    std::string by;
-    int value;
-    for (int i = 0; i < QUEST_OBJECTIVES_COUNT; i++) {
-        value = RequiredNpcOrGoCount[i];
-        if (!value)
-            break;
-        pattern = "%q" + std::to_string(i + 1);
-        start = Objectives.find(pattern);
-        while (start != std::string::npos) {
-            by = std::to_string(value);
-            Objectives.replace(start, 3, by);
-            start = Objectives.find(pattern, start);
-        }
-    }
-    for (int i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++) {
-        value = RequiredItemCount[i];
-        if (!value)
-            break;
-        pattern = "%Q" + std::to_string(i + 1);
-        start = Objectives.find(pattern);
-        while (start != std::string::npos) {
-            by = std::to_string(value);
-            Objectives.replace(start, 3, by);
-            start = Objectives.find(pattern, start);
-        }
-    }
-
     // int8 Unknown0 = questRecord[100].Get<uint8>();
     // int32 VerifiedBuild = questRecord[105].Get<int32>();
 
@@ -169,6 +147,36 @@ Quest::Quest(Field* questRecord)
     if (sWorld->getBoolConfig(CONFIG_QUEST_IGNORE_AUTO_COMPLETE))
     {
         Flags &= ~QUEST_FLAGS_AUTOCOMPLETE;
+    }
+}
+
+void Quest::ExpandDescriptions() {
+    // Interpolate quest quantities, %q1...%q4, %Q1...%Q6 etc.
+    int32 id;
+    uint32 count;
+    std::string pattern;
+    std::string name;
+    const ItemTemplate* item_template;
+
+    for (int i = 0; i < QUEST_OBJECTIVES_COUNT; i++) {
+        id = RequiredNpcOrGo[i];
+        if (!id)
+            break;
+        replace_in_str(Objectives, "%q" + std::to_string(i + 1), [id]() {
+            if (id < 0)
+                return sObjectMgr->GetGameObjectTemplate(-id)->name;
+            return sObjectMgr->GetCreatureTemplate(id)->Name;
+        });
+        count = RequiredNpcOrGoCount[i];
+        replace_in_str(Objectives, "%n" + std::to_string(i + 1), [count]() {return std::to_string(count);});
+    }
+    for (int i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++) {
+        id = RequiredItemId[i];
+        if (!id)
+            break;
+        count = RequiredItemCount[i];
+        replace_in_str(Objectives, "%Q" + std::to_string(i + 1), [id]() {return sObjectMgr->GetItemTemplate(id)->Name1;});
+        replace_in_str(Objectives, "%N" + std::to_string(i + 1), [count]() {return std::to_string(count);});
     }
 }
 

@@ -324,11 +324,13 @@ public:
     typedef std::vector<uint32> PrevChainQuests;
     PrevChainQuests prevChainQuests;
 
-    WorldPacket queryData; // pussywizard
-    void InitializeQueryData(); // pussywizard
+    WorldPacket queryData;
+    void InitializeQueryData();
 
     void SetEventIdForQuest(uint16 eventId) { _eventIdForQuest = eventId; }
     [[nodiscard]] uint16 GetEventIdForQuest() const { return _eventIdForQuest; }
+
+    void ExpandDescriptions();
 
     // cached data
 private:

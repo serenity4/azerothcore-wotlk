@@ -4355,6 +4355,20 @@ void ObjectMgr::BuildPlayerLevelInfo(uint8 race, uint8 _class, uint8 level, Play
     }
 }
 
+void ObjectMgr::CacheQuestTemplates() {
+    uint32 max = 0;
+    for (QuestMap::const_iterator itr = _questTemplates.begin(); itr != _questTemplates.end(); ++itr)
+        if (itr->first > max)
+            max = itr->first;
+    if (max)
+    {
+        _questTemplatesFast.clear();
+        _questTemplatesFast.resize(max + 1, nullptr);
+        for (QuestMap::iterator itr = _questTemplates.begin(); itr != _questTemplates.end(); ++itr)
+            _questTemplatesFast[itr->first] = itr->second;
+    }
+}
+
 void ObjectMgr::LoadQuests()
 {
     uint32 oldMSTime = getMSTime();
@@ -4412,20 +4426,7 @@ void ObjectMgr::LoadQuests()
         _questTemplates[newQuest->GetQuestId()] = newQuest;
     } while (result->NextRow());
 
-    // pussywizard:
-    {
-        uint32 max = 0;
-        for (QuestMap::const_iterator itr = _questTemplates.begin(); itr != _questTemplates.end(); ++itr)
-            if (itr->first > max)
-                max = itr->first;
-        if (max)
-        {
-            _questTemplatesFast.clear();
-            _questTemplatesFast.resize(max + 1, nullptr);
-            for (QuestMap::iterator itr = _questTemplates.begin(); itr != _questTemplates.end(); ++itr)
-                _questTemplatesFast[itr->first] = itr->second;
-        }
-    }
+    CacheQuestTemplates();
 
     for (QuestMap::iterator itr = _questTemplates.begin(); itr != _questTemplates.end(); ++itr)
         itr->second->InitializeQueryData();
@@ -5121,6 +5122,14 @@ void ObjectMgr::LoadQuests()
 
     LOG_INFO("server.loading", ">> Loaded {} Quests Definitions in {} ms", (unsigned long)_questTemplates.size(), GetMSTimeDiffToNow(oldMSTime));
     LOG_INFO("server.loading", " ");
+}
+
+void ObjectMgr::ExpandQuestDescriptions() {
+    Quest* quest;
+    for (auto pair: _questTemplates) {
+        quest = pair.second;
+        quest->ExpandDescriptions();
+    }
 }
 
 void ObjectMgr::LoadQuestLocales()

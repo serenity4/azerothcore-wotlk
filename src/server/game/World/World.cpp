@@ -1801,6 +1801,9 @@ void World::SetInitialWorldSettings()
     LOG_INFO("server.loading", "Loading Quest Money Rewards...");
     sObjectMgr->LoadQuestMoneyRewards();
 
+    LOG_INFO("server.loading", "Expanding Quest descriptions...");
+    sObjectMgr->ExpandQuestDescriptions();
+
     LOG_INFO("server.loading", "Loading Objects Pooling Data...");
     sPoolMgr->LoadFromDB();
 

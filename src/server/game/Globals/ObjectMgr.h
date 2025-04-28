@@ -828,6 +828,7 @@ public:
     }
 
     [[nodiscard]] QuestMap const& GetQuestTemplates() const { return _questTemplates; }
+    void ExpandQuestDescriptions();
 
     [[nodiscard]] uint32 GetQuestForAreaTrigger(uint32 Trigger_ID) const
     {
@@ -943,6 +944,7 @@ public:
     }
 
     void LoadQuests();
+    void CacheQuestTemplates();
     void LoadQuestMoneyRewards();
     void LoadQuestStartersAndEnders()
     {
