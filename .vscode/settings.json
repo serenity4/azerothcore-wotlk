@@ -122,7 +122,8 @@
         "hash_set": "cpp",
         "expected": "cpp",
         "stdfloat": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "*.inc": "cpp"
     },
     "deno.enable": true,
     "deno.path": "deps/deno/bin/deno",

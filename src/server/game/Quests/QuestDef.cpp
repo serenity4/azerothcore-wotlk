@@ -21,10 +21,33 @@
 #include "Player.h"
 #include "World.h"
 
-void replace_in_str(std::string &str, const std::string pattern, std::function<std::string(void)> f) {
+void apply_plural(std::string &text) {
+    size_t n = text.length();
+    if (n <= 2)
+        return;
+    if (text[n] == 'x') {
+        text.pop_back();
+        text.append("ces");
+    } else if (text[n-1] == 'v' && text[n] == 'e') {
+        text.pop_back();
+        text.pop_back();
+        text.append("ves");
+    } else if (text[n] == 'f') {
+        text.pop_back();
+        text.append("ves");
+    } else {
+        text.push_back('s');
+    }
+}
+
+void replace_in_str(std::string &str, const std::string pattern, std::function<std::string(void)> f, bool plural = false) {
     size_t start = str.find(pattern);
+    std::string replacement;
     while (start != std::string::npos) {
-        str.replace(start, pattern.length(), f());
+        replacement = f();
+        if (plural)
+            apply_plural(replacement);
+        str.replace(start, pattern.length(), replacement);
         start = str.find(pattern, start);
     }
 }
@@ -161,13 +184,13 @@ void Quest::ExpandDescriptions() {
     for (int i = 0; i < QUEST_OBJECTIVES_COUNT; i++) {
         id = RequiredNpcOrGo[i];
         if (!id)
-            break;
+        break;
+        count = RequiredNpcOrGoCount[i];
         replace_in_str(Objectives, "%q" + std::to_string(i + 1), [id]() {
             if (id < 0)
                 return sObjectMgr->GetGameObjectTemplate(-id)->name;
             return sObjectMgr->GetCreatureTemplate(id)->Name;
-        });
-        count = RequiredNpcOrGoCount[i];
+        }, count > 1);
         replace_in_str(Objectives, "%n" + std::to_string(i + 1), [count]() {return std::to_string(count);});
     }
     for (int i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++) {
@@ -175,7 +198,7 @@ void Quest::ExpandDescriptions() {
         if (!id)
             break;
         count = RequiredItemCount[i];
-        replace_in_str(Objectives, "%Q" + std::to_string(i + 1), [id]() {return sObjectMgr->GetItemTemplate(id)->Name1;});
+        replace_in_str(Objectives, "%Q" + std::to_string(i + 1), [id]() {return sObjectMgr->GetItemTemplate(id)->Name1;}, count > 1);
         replace_in_str(Objectives, "%N" + std::to_string(i + 1), [count]() {return std::to_string(count);});
     }
 }
