@@ -2984,6 +2984,7 @@ void SpellMgr::LoadSpellInfoCustomAttributes()
                 case SPELL_EFFECT_HEAL_PCT:
                 case SPELL_EFFECT_ENERGIZE_PCT:
                 case SPELL_EFFECT_ENERGIZE:
+                case SPELL_EFFECT_ENERGIZE_MISSING:
                 case SPELL_EFFECT_HEAL_MECHANICAL:
                 case SPELL_EFFECT_CREATE_ITEM:
                     spellInfo->AttributesCu |= SPELL_ATTR0_CU_NO_INITIAL_THREAT;

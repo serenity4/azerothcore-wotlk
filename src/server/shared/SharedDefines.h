@@ -941,7 +941,8 @@ enum SpellEffects
     SPELL_EFFECT_TALENT_SPEC_SELECT                 = 162,
     SPELL_EFFECT_163                                = 163,
     SPELL_EFFECT_REMOVE_AURA                        = 164,
-    TOTAL_SPELL_EFFECTS                             = 165
+    SPELL_EFFECT_ENERGIZE_MISSING                   = 165,
+    TOTAL_SPELL_EFFECTS                             = 166,
 };
 
 // EnumUtils: DESCRIBE THIS
@@ -3546,7 +3547,8 @@ enum SpellFamilyNames
     // 14 - unused
     SPELLFAMILY_DEATHKNIGHT = 15,
     // 16 - unused
-    SPELLFAMILY_PET         = 17
+    SPELLFAMILY_PET         = 17,
+    SPELLFAMILY_SPELLBLADE  = 18,
 };
 
 enum TradeStatus

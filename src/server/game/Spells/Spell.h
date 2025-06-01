@@ -411,6 +411,7 @@ public:
     void EffectActivateSpec(SpellEffIndex effIndex);
     void EffectPlaySound(SpellEffIndex effIndex);
     void EffectRemoveAura(SpellEffIndex effIndex);
+    void EffectEnergizeMissing(SpellEffIndex effIndex);
     void EffectCastButtons(SpellEffIndex effIndex);
     void EffectRechargeManaGem(SpellEffIndex effIndex);
 

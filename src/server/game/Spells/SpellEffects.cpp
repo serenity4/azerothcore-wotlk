@@ -237,6 +237,7 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS] =
     &Spell::EffectActivateSpec,                             //162 SPELL_EFFECT_TALENT_SPEC_SELECT       activate primary/secondary spec
     &Spell::EffectNULL,                                     //163 unused
     &Spell::EffectRemoveAura,                               //164 SPELL_EFFECT_REMOVE_AURA
+    &Spell::EffectEnergizeMissing,                          //165 SPELL_EFFECT_ENERGIZE_MISSING
 };
 
 void Spell::EffectNULL(SpellEffIndex /*effIndex*/)
@@ -1991,6 +1992,33 @@ void Spell::EffectEnergizePct(SpellEffIndex effIndex)
         return;
 
     uint32 gain = CalculatePct(maxPower, damage);
+    m_caster->EnergizeBySpell(unitTarget, m_spellInfo->Id, gain, power);
+}
+
+void Spell::EffectEnergizeMissing(SpellEffIndex effIndex)
+{
+    if (effectHandleMode != SPELL_EFFECT_HANDLE_HIT_TARGET)
+        return;
+
+    if (!unitTarget)
+        return;
+    if (!unitTarget->IsAlive())
+        return;
+
+    if (m_spellInfo->Effects[effIndex].MiscValue < 0 || m_spellInfo->Effects[effIndex].MiscValue >= int8(MAX_POWERS))
+        return;
+
+    Powers power = Powers(m_spellInfo->Effects[effIndex].MiscValue);
+
+    if (unitTarget->IsPlayer() && !unitTarget->HasActivePowerType(power) && !m_spellInfo->HasAttribute(SPELL_ATTR7_ONLY_IN_SPELLBOOK_UNTIL_LEARNED))
+        return;
+
+    uint32 maxPower = unitTarget->GetMaxPower(power);
+    uint32 currentPower = unitTarget->GetPower(power);
+    if (maxPower == 0)
+        return;
+
+    uint32 gain = CalculatePct(maxPower - currentPower, damage);
     m_caster->EnergizeBySpell(unitTarget, m_spellInfo->Id, gain, power);
 }
 
